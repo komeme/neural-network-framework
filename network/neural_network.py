@@ -9,6 +9,7 @@ class NeuralNetwork:
         self.output_size = len(labels)
         self.hidden_sizes = hidden_sizes
         self.layer_sizes = (input_size, *hidden_sizes, len(labels))
+        # print(self.layer_sizes)
         self.labels = labels
         self.label_index = {labels[i]: i for i in range(len(labels))}
         self.variables = self._init_variables()
@@ -17,7 +18,7 @@ class NeuralNetwork:
     def _init_variables(self):
         variables = {}
         for i in range(len(self.layer_sizes)-1):
-            variables['w{}'.format(i)] = Variable(np.random.randn((self.layer_sizes[i], self.layer_sizes[i + 1])))
+            variables['w{}'.format(i)] = Variable(np.random.randn(self.layer_sizes[i], self.layer_sizes[i + 1]))
             variables['b{}'.format(i)] = Variable(np.random.randn(self.layer_sizes[i + 1]))
         return variables
 
@@ -30,13 +31,13 @@ class NeuralNetwork:
                     graph,
                     self.variables['w{}'.format(i)]
                 ),
-                Variable(self.variables['b{}'.format(i)])
+                self.variables['b{}'.format(i)]
             )
-            if i < len(self.layer_sizes)-1:
+            if i < len(self.layer_sizes)-2:
                 graph = Sigmoid(graph)
         return graph
 
-    def fit(self, x: np.ndarray, label):
+    def fit(self, x: np.ndarray, label, update=True):
         graph = self._calculate(x)
 
         t_node = self.t_node(label)
@@ -44,7 +45,9 @@ class NeuralNetwork:
         loss = graph.forward()
 
         graph.backward(1)
-        self.optimizer.update()
+        if update:
+            self.optimizer.update()
+        return loss
 
     def predict(self, x):
         graph = self._calculate(x)
@@ -57,4 +60,9 @@ class NeuralNetwork:
         t = np.zeros(self.output_size)
         t[index] = 1.0
         return Variable(t)
+
+    def numeric_gradient(self):
+        eps = 1e-4
+        self.variables['w1']
+        
 

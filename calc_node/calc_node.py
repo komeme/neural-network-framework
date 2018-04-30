@@ -1,8 +1,7 @@
-from abc import ABC, abstractmethod
-import numpy as np
+from abc import ABCMeta, abstractmethod
 
 
-class CalcNode(metaclass=ABC):
+class CalcNode(metaclass=ABCMeta):
     @abstractmethod
     def forward(self):
         raise NotImplementedError()

@@ -4,16 +4,16 @@ import numpy as np
 
 class Variable(CalcNode):
     def __init__(self, var: np.ndarray):
-        self.value = var
+        self.output = var
         self.grad = np.zeros_like(var)
         self._count = 0
 
     def forward(self):
         self._count += 1
-        return self.value
+        return self.output
 
     def backward(self, d):
-        if d.shape != self.value.shape:
+        if d.shape != self.output.shape:
             raise Exception()
         self._count -= 1
         self.grad += d

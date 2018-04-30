@@ -8,5 +8,5 @@ class SGD:
 
     def update(self):
         for key, var in self.variables.items():
-            var.value -= self.lr * var.grad
+            var.output -= self.lr * var.grad
             var.grad = np.zeros_like(var.grad)
