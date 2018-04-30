@@ -61,8 +61,29 @@ class NeuralNetwork:
         t[index] = 1.0
         return Variable(t)
 
-    def numeric_gradient(self):
-        eps = 1e-4
-        self.variables['w1']
+    def numeric_gradient(self, x, label):
+        eps = 1e-6
+        target = self.variables['w1'].output
+        target[0][0] += eps
+        print(target[0][0])
+        loss_plus = self.fit(x, label, False)
+        # print(loss_plus)
+
+        target[0][0] -= 2 * eps
+        loss_minus = self.fit(x, label, False)
+        print(target[0][0])
+        # print(loss_minus)
+
+        target[0][0] += eps
+
+        return (loss_plus - loss_minus) / (2 * eps)
+
+    def gradient_check(self, x, label):
+        loss = self.fit(x, label, False)
+        backprop_grad = self.variables['w1'].grad[0][0]
+        numeric_grad = self.numeric_gradient(x, label)
+
+        print('backprop: {} numeric: {}'.format(backprop_grad, numeric_grad))
+
         
 

@@ -24,6 +24,7 @@ class NetworkEvaluator:
             for n in random_int:
                 x, label = self._train_data[n]
                 loss = self._nn.fit(np.array(x), label)
+                # self._nn.gradient_check(x, label)
                 fit_results.append(FitResult(label, loss))
 
             # 平均ロスを追加

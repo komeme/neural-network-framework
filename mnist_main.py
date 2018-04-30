@@ -15,8 +15,8 @@ def main():
 
     manager = NetworkEvaluator(nn, train_data, test_data)
 
-    # manager.train(num_epoch=1000, plot=True)
-    manager.train_and_test(num_epoch=1000, plot=True, save_path='data/nn2.pickle')
+    manager.train(num_epoch=10, plot=True)
+    # manager.train_and_test(num_epoch=1, plot=True, save_path='data/nn2.pickle')
 
 if __name__ == '__main__':
     main()

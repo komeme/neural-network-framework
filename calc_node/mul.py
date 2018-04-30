@@ -25,10 +25,8 @@ class Mul(CalcNode):
         self._count -= 1
         self.grad += d
         if self._count == 0:
-            # self._node1.backward(self._node2.forward() * self.grad)
-            # self._node2.backward(self._node1.forward() * self.grad)
             self._node1.backward(np.dot(self.grad, self._node2.output.T))
             self._node2.backward(np.outer(self._node1.output, self.grad))
-            # print(np.dot(self.grad, self._node2.forward().T).shape)
-            # print(np.outer(self._node1.forward(), self.grad).shape)
+            # print(np.dot(self.grad, self._node2.output.T).shape)
+            # print(np.outer(self._node1.output, self.grad).shape)
             # print('*'*30)
