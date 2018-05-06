@@ -7,7 +7,7 @@ from tqdm import tqdm
 
 
 class NetworkEvaluator:
-    def __init__(self, network: NeuralNetwork, train_data, test_data):
+    def __init__(self, network, train_data, test_data):
         self._nn = network
         self._train_data = train_data
         self._test_data = test_data
